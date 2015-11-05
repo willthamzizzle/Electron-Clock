@@ -1,15 +1,15 @@
 html,
 body {
     background: #80d4ea;
-    height: 725px;
+    height: 300px;
     overflow: hidden;
-    width: 368px;
+    width: 200px;
     -webkit-app-region: drag;
     -webkit-user-select: none;
 }
 
 #main {
-    background: #1DCCEB;
+    background: #80d4ea;
     border-bottom: 1px solid #73E2F7;
     height: 700px;
 }
@@ -25,7 +25,7 @@ body {
 }
 
 #main h1 {
-    color: #fff;
+    color: #80d4ea;
     padding-right: 6px;
     padding-top: 5px;
     text-align: right;
@@ -99,7 +99,7 @@ body {
     width: 32px;
     z-index: 1;
 
-    -webkit-app-region: no-drag;
+    -webkit-app-region: drag;
 }
 
 .settings {
