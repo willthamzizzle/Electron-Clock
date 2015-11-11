@@ -1,6 +1,7 @@
 {
   "name"    : "MyApp",
   "version" : "0.1.0",
+  "description" : "A clock app made with Electron",
   "main"    : "main.js",
   "scripts" : {
     "start" : "electron ."

@@ -1,5 +1,5 @@
 'use strict';
-
+/*
 var ipc = require('ipc');
 var remote = require('remote');
 var Tray = remote.require('tray');

@@ -1,17 +1,9 @@
 html,
 body {
     background: #80d4ea;
-    height: 300px;
-    overflow: hidden;
-    width: 200px;
+    overflow: visible;
     -webkit-app-region: drag;
     -webkit-user-select: none;
-}
-
-#main {
-    background: #80d4ea;
-    border-bottom: 1px solid #73E2F7;
-    height: 700px;
 }
 
 .speaker {
@@ -22,19 +14,6 @@ body {
 .speaker img {
     height: 194px;
     width: 274px;
-}
-
-#main h1 {
-    color: #80d4ea;
-    padding-right: 6px;
-    padding-top: 5px;
-    text-align: right;
-    text-indent: -10000px;
-}
-
-#main h1 img {
-    height: 31px;
-    width: 195px;
 }
 
 .buttons {

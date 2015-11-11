@@ -2,7 +2,7 @@
 
 var app = require('app');
 var BrowserWindow = require('browser-window');
-var globalShortcut = require('global-shortcut');
+//var globalShortcut = require('global-shortcut');
 //var configuration = require('./configuration');
 var ipc = require('ipc');
 
@@ -14,15 +14,22 @@ app.on('ready', function() {
     //    configuration.saveSettings('shortcutKeys', ['ctrl', 'shift']);
     //}
 
-    mainWindow = new BrowserWindow({
-        frame: false,
-        height: 300,
-        resizable: true,
-        width: 200
-    });
+  mainWindow = new BrowserWindow({
+    frame: false,
+    height: 300,
+    resizable: true,
+    width: 200
+  });
 
-    mainWindow.loadUrl('file://' + __dirname + '/app/index.html');
+  mainWindow.loadUrl('file://' + __dirname + '/MyApp/index.html');
 
+  // Emitted when the window is closed.
+  mainWindow.on('closed', function() {
+  // Dereference the window object, usually you would store windows
+  // in an array if your app supports multi windows, this is the time
+  // when you should delete the corresponding element.
+    mainWindow = null;
+  });
     //setGlobalShortcuts();
 });
 
@@ -62,12 +69,15 @@ ipc.on('open-settings-window', function () {
         settingsWindow = null;
     });
 });
+*/
 
+/*
 ipc.on('close-settings-window', function () {
     if (settingsWindow) {
         settingsWindow.close();
     }
 });
+
 
 ipc.on('set-global-shortcuts', function () {
     setGlobalShortcuts();
