@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>EMCTimeSpent</title>
+
+	<style type="text/css">
+	*{
+		padding:0px;
+		margin:0px;
+	}
+
+	body{
+		background-color:#FFFFFF;
+		color:#8A8A8A;
+		font-family: Verdana;
+		font-size: 10px;
+		border:0px solid #373737;
+		text-align:center;
+	}
+
+	.container{
+		padding:5px;
+	}
+
+	.section{
+		border-bottom:1px solid #8A8A8A;
+		margin-bottom:5px;
+		padding-bottom:5px;
+	}
+
+	a.button{
+		color:#FFFFFF;
+		background-color:#2c95dd;
+		
+		font-weight:bold;
+		font-size:10px;
+		text-align:center;
+
+		display:block;
+		cursor:pointer;
+		width:110px;
+		
+		padding:5px;
+		margin-top:5px;
+	}
+
+	#header{
+
+	}
+
+	#refreshed{
+		
+	}
+
+	.ts{
+		
+	}
+
+	.digit{
+		font-size:18pt;
+		color:#171717;
+	}
+
+	.small{
+		font-size:10pt;
+	}
+
+	</style>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript">
+	// feed url
+	var url_feed = 'http://pwd-statuni01.corp.emc.com/tools/timespent/index.php';
+	var url_landing = 'http://pwd-statuni01.corp.emc.com/tse';
+
+	var easPath = false;
+	var defaultEasPath = 'C:\\Program Files\\Employee Availability System\\Employee Availability System.exe';
+	// feed entry count
+	var count = false;
+
+	// width and height of the gadget
+	var width = 130;
+	var height = 180;
+
+	var app_version = '1.0';
+	
+	// max title length
+	var maxTitleLength = false;
+
+	// time waiting between requests in seconds
+	var requestSleep = 300;
+
+	var feedInterval = null;
+
+
+	function initGadget()
+	{
+		//$('#gadgetContent').html('Getting data...');
+
+		loadSettings();
+
+		$('body').css('width', width);
+		$('body').css('height', height);
+
+		getFeed();
+
+		if(feedInterval)
+		{
+			clearInterval(feedInterval);
+		}
+
+		feedInterval = setInterval('getFeed()', requestSleep * 1000);
+	}
+
+	function getFeed()
+	{
+
+		$.get(url_feed, function(response){
+			var now = new Date();
+			var refreshed = ('0' + (now.getHours())).slice(-2)+':'+('0' + (now.getMinutes())).slice(-2);
+			var tsHours = Math.floor( response.data.timespent / 60);
+			var tsMins = response.data.timespent % 60;
+			
+			var lastSecs = response.data.last_timespent;
+			if(lastSecs != -1){
+				var lastTime = new Date(now.getTime() - (lastSecs*1000));
+				var lastHours = Math.floor(lastSecs/3600);
+				var lastSecs = lastSecs % 3600;
+				var lastMins = ('0'+Math.floor(lastSecs/60)).slice(-2);
+			} else {
+				lastHours = "--";
+				lastMins = "--";	
+			}
+			// Update time
+			$('#tsHours').html(tsHours);
+			$('#tsMins').html(tsMins);
+			
+			// Update last
+			$('#lastHours').html(lastHours);
+			$('#lastMins').html(lastMins);
+			
+			// Update last refresh time
+			$('#refreshed').html(refreshed);
+		});
+	}
+
+	function loadSettings()
+	{
+		var settingsEasPath = System.Gadget.Settings.readString('settingsEasPath');
+
+		if(settingsEasPath)
+		{
+			easPath = settingsEasPath;
+		}
+		else
+		{
+			easPath = defaultEasPath;
+		}
+	}
+
+	function settingsClosed(event)
+	{
+		if(event.closeAction == event.Action.commit)
+		{
+			initGadget();
+		}
+		else if (event.closeAction == event.Action.cancel)
+		{
+		}
+	}
+
+	function StartProgram()
+	{
+		var shell = new ActiveXObject("WScript.Shell");
+		shell.Run('"'+easPath+'"');
+		window.event.returnValue=false;
+	}
+
+	function StartUrl(url)
+	{
+		var shell = new ActiveXObject("WScript.Shell");
+		shell.Run(url);
+		window.event.returnValue=false;
+	}
+
+	jQuery.support.cors = true;
+
+	System.Gadget.settingsUI = "Settings.html";
+	System.Gadget.onSettingsClosed = settingsClosed;
+
+	$(document).ready(function(){
+		initGadget();
+	});
+	</script>
+</head>
+<body>
+<div class="container">
+	<div class="section" id="header">You have logged<br>
+	<span id="tsHours" class="digit"></span><span class="light small">h</span><span id="tsMins" class="digit"></span><span class="light small">m</span> today</div>
+
+	<div class="section" id="header">Last note entered<br>
+	<span id="lastHours" class="digit"></span><span class="light small">h</span><span id="lastMins" class="digit"></span><span class="light small">m</span> ago</div>
+
+	<span>Refreshed@<span id="refreshed"></span>
+	
+	<a class="button" onClick="StartUrl(url_landing)">Dashboard</a>
+	<a class="button" onclick="StartProgram()">EAS</a>
+</div>
+</body>
+</html>

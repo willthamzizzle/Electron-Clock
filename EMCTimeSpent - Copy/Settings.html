@@ -1,0 +1,60 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>EMCTimeSpent</title>
+	<style type="text/css">
+	body
+	{
+		width:260px;
+		height:70px;
+		margin:4px;
+		padding:0px;
+	}
+	</style>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript">
+	defaultEasPath = 'C:\\Program Files\\Employee Availability System\\Employee Availability System.exe';	
+	$(document).ready(function(){
+		var settingsEasPath = System.Gadget.Settings.readString('settingsEasPath');
+		
+		if(settingsEasPath)
+		{
+			$('#settingsEasPath').val(settingsEasPath);
+		} else {
+			$('#settingsEasPath').val(defaultEasPath);
+		}
+	});
+
+	function settingsClosing(event)
+	{
+		if(event.closeAction == event.Action.commit)
+		{
+			var settingsEasPath = $('#settingsEasPath').val();
+			
+			if(settingsEasPath.length > 7)
+			{
+				System.Gadget.Settings.writeString('settingsEasPath', settingsEasPath);
+			}
+			else
+			{
+				System.Gadget.Settings.writeString('settingsEasPath', defaultEasPath);
+			}
+		}
+
+		event.cancel = false;
+	}
+
+	System.Gadget.onSettingsClosing = settingsClosing;
+	</script>
+</head>
+<body>
+
+<div id="gadgetContent">
+<p>
+	<label for="settingsEasPath">EAS Path</label><br />
+	<input type="text" name="settingsEasPath" id="settingsEasPath" size="32" value="" />
+</p>
+</div>
+
+</body>
+</html>

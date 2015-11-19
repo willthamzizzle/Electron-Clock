@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<gadget>
+	<name>EMC Time Spent</name>
+	<version>1.0</version>
+	<author name="Stephen Carter">
+		<info url="http://one.emc.com/clearspace/blogs/stephencarter/2013/04/26/time-spent-widget" />
+	</author>
+	<copyright>EMC Corporation</copyright>
+	<description>Simple gadget to display time logged in Service Center</description>
+	<hosts>
+		<host name="sidebar">
+			<base type="HTML" apiVersion="1.0" src="EMCTimeSpent.html" />
+			<permissions>Full</permissions>
+			<platform minPlatformVersion="1.0" />
+		</host>
+	</hosts>
+</gadget>
