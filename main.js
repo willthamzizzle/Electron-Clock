@@ -13,7 +13,7 @@ app.on('ready', function() {
     //if (!configuration.readSettings('shortcutKeys')) {
     //    configuration.saveSettings('shortcutKeys', ['ctrl', 'shift']);
     //}
-
+  // gray color: BABCBE
   mainWindow = new BrowserWindow({
     frame: false,
     height: 300,
